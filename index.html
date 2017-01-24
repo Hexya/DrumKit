@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<p class="Text Drum">Drum Kit</p>
+<p class="Text underline">_</p>
+<p class="Text play">P lay your sound</p>
+  <div class="keys">
+    <div data-key="81" class="key">
+      <kbd>Q</kbd>
+      <span class="sound">Beats Loop 1</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">Beats Loop 2</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">Acc Loop</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">Spatial Song</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">Rebound</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">Echo</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">Vocal Beats</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">Vocal Fem</span>
+    </div>
+  </div>
+
+  <audio data-key="81" src="sounds/083_lowrider-wobba-wobba-2step.wav"></audio>
+  <audio data-key="83" src="sounds/083_trippy-ringysnarebeat-3bars.wav"></audio>
+  <audio data-key="68" src="sounds/081_Imgladyoumine.wav"></audio>
+  <audio data-key="70" src="sounds/waywakkaway.wav"></audio>
+  <audio data-key="71" src="sounds/click-n-shiver.wav"></audio>
+  <audio data-key="72" src="sounds/noise-harmonic-hit.wav"></audio>
+  <audio data-key="74" src="sounds/space-noise-bird.wav"></audio>
+  <audio data-key="75" src="sounds/vocal-loop.wav"></audio>
+  <audio data-key="76" src="sounds/female-mmm.wav"></audio>
+
+<script>
+
+function playSound(e) {
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  if(!audio) return; //stop function
+  audio.currentTime = 0; //instant reload sound
+  audio.play();
+  key.classList.add('playing');
+}
+  function removeTransition(e) {
+    if(e.propertyName !== 'transform') return; // skip if not transform
+    this.classList.remove('playing') //remove css transform style
+  }
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend',removeTransition));
+
+  window.addEventListener('keydown',playSound);
+
+
+</script>
+
+
+</body>
+</html>
